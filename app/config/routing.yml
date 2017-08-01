@@ -1,0 +1,13 @@
+api_o_auth:
+    resource: "@ApiOAuthBundle/Resources/config/routing.yml"
+    prefix:   /
+
+api_user:
+    resource: "@ApiUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
+
+fos_oauth_server_authorize:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
