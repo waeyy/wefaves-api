@@ -6,3 +6,13 @@ services:
         class: Api\UserBundle\Serializer\Listener\UserListener
         tags:
             - { name: jms_serializer.event_subscriber }
+
+    app.form.registration:
+        class: Api\UserBundle\Form\Type\RegistrationFormType
+        tags:
+            - { name: form.type, alias: registration_form }
+
+    app.form.profile:
+        class: Api\UserBundle\Form\Type\ProfileFormType
+        tags:
+            - { name: form.type, alias: profile_form }

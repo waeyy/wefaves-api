@@ -18,17 +18,12 @@ class User extends BaseUser
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      *
-     * @Serializer\Groups({"GET_USERS", "GET_AUTHENTICATED_USER"})
+     * @Serializer\Groups({"GET_USERS", "GET_USER", "POST_USER", "GET_AUTHENTICATED_USER"})
      */
     protected $id;
 
     /**
-     * @Serializer\Groups({"GET_USERS", "GET_AUTHENTICATED_USER"})
-     */
-    protected $username;
-
-    /**
-     * @Serializer\Groups({"GET_AUTHENTICATED_USER"})
+     * @Serializer\Groups({"GET_USERS", "GET_USER", "POST_USER", "GET_AUTHENTICATED_USER"})
      */
     protected $email;
 
@@ -36,4 +31,14 @@ class User extends BaseUser
     {
         parent::__construct();
     }
+
+    public function setEmail($email)
+    {
+        $email = is_null($email) ? '' : $email;
+        parent::setEmail($email);
+        $this->setUsername($email);
+
+        return $this;
+    }
+
 }
