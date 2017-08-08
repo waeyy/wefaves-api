@@ -11,28 +11,28 @@ FOS\UserBundle\Model\User:
              fields: emailCanonical
              errorPath: email
              message: fos_user.email.already_used
-             groups: [ "ApiRegistration", "ApiProfile" ]
+             groups: [ "Registration", "Profile" ]
 
     properties:
         email:
             - NotBlank:
                 message: fos_user.email.blank
-                groups: [ "ApiRegistration", "ApiProfile" ]
+                groups: [ "Registration", "Profile" ]
             - Length:
                 min: 2
                 minMessage: fos_user.email.short
                 max: 255
                 maxMessage: fos_user.email.long
-                groups: [ "ApiRegistration", "ResetPassword" ]
+                groups: [ "Registration", "ResetPassword" ]
             - Email:
                 message: fos_user.email.invalid
-                groups: [ "ApiRegistration", "ApiProfile" ]
+                groups: [ "Registration", "Profile" ]
         plainPassword:
             - NotBlank:
                 message: fos_user.password.blank
-                groups: [ "ApiRegistration", "ResetPassword", "ChangePassword" ]
+                groups: [ "Registration", "ResetPassword", "ChangePassword" ]
             - Length:
                 min: 2
                 max: 4096
                 minMessage: fos_user.password.short
-                groups: [ "ApiRegistration", "ApiProfile", "ResetPassword", "ChangePassword"]
+                groups: [ "Registration", "Profile", "ResetPassword", "ChangePassword"]

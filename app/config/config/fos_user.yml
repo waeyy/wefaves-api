@@ -8,10 +8,18 @@ fos_user:
     registration:
         form:
             type: Api\UserBundle\Form\Type\RegistrationFormType
-            name: registration_form
-            validation_groups: [ApiRegistration]
+            name: null
+            validation_groups: [Registration]
     profile:
         form:
             type: Api\UserBundle\Form\Type\ProfileFormType
-            name: profile_form
-            validation_groups: [ApiProfile]
+            name: null
+            validation_groups: [Profile]
+    change_password:
+        form:
+            name: null
+            validation_groups: [ChangePassword]
+    resetting:
+        form:
+            name: null
+            validation_groups: [ChangePassword]
