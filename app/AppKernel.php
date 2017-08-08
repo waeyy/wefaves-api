@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new Api\UserBundle\ApiUserBundle(),
             new Api\OAuthBundle\ApiOAuthBundle(),
             new CoreBundle\CoreBundle(),
+            new Api\HistoryBundle\ApiHistoryBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
