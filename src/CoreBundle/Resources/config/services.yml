@@ -1,0 +1,17 @@
+services:
+#    core.example:
+#        class: CoreBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    app.normalizer.resource_validation_exception:
+        class: CoreBundle\Normalizer\NotFoundHttpExceptionNormalizer
+        arguments:
+            - { type: 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException' }
+        tags:
+            - { name: app.normalizer }
+
+    app.exception_subscriber:
+        class: CoreBundle\EventSubscriber\ExceptionListener
+        arguments:
+            - '@jms_serializer'
+        tags:
+            - { name: kernel.event_subscriber }

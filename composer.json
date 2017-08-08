@@ -5,6 +5,7 @@
     "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
         "psr-4": {
+            "CoreBundle\\": "src/CoreBundle",
             "Api\\UserBundle\\": "src/Api/UserBundle",
             "Api\\OAuthBundle\\": "src/Api/OAuthBundle"
         },
