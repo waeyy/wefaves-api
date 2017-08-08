@@ -1,0 +1,25 @@
+fos_user:
+    db_driver: orm # other valid values are 'mongodb' and 'couchdb'
+    firewall_name: main
+    user_class: Api\UserBundle\Entity\User
+    from_email:
+        address: "%mailer_user%"
+        sender_name: "%mailer_user%"
+    registration:
+        form:
+            type: Api\UserBundle\Form\Type\RegistrationFormType
+            name: null
+            validation_groups: [Registration]
+    profile:
+        form:
+            type: Api\UserBundle\Form\Type\ProfileFormType
+            name: null
+            validation_groups: [Profile]
+    change_password:
+        form:
+            name: null
+            validation_groups: [ChangePassword]
+    resetting:
+        form:
+            name: null
+            validation_groups: [ChangePassword]
