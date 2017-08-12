@@ -4,6 +4,7 @@ namespace Api\HistoryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -21,9 +22,22 @@ class History
     protected $id;
 
     /**
+     * @ORM\Column(type="integer")
+     *
+     * @Serializer\Groups({"GET_HISTORIES"})
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     */
+    protected $itemId;
+
+    /**
      * @ORM\Column(type="string", length=100)
      *
      * @Serializer\Groups({"GET_HISTORIES"})
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     protected $title;
 
@@ -31,6 +45,10 @@ class History
      * @ORM\Column(type="text")
      *
      * @Serializer\Groups({"GET_HISTORIES"})
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Url(message = "The url '{{ value }}' is not a valid url.")
      */
     protected $url;
 
@@ -42,16 +60,22 @@ class History
     protected $user;
 
     /**
-     * @ORM\Column(type="float", name="last_visit")
+     * @ORM\Column(type="float", name="last_visit_time")
      *
      * @Serializer\Groups({"GET_HISTORIES"})
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
-    protected $lastVisit;
+    protected $lastVisitTime;
 
     /**
      * @ORM\Column(type="integer")
      *
      * @Serializer\Groups({"GET_HISTORIES"})
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     protected $typedCount;
 
@@ -59,6 +83,9 @@ class History
      * @ORM\Column(type="integer")
      *
      * @Serializer\Groups({"GET_HISTORIES"})
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     protected $visitCount;
 
@@ -76,6 +103,12 @@ class History
      */
     protected $createdAt;
 
+    public function __construct()
+    {
+        $this->setUpdatedAt(new \DateTime());
+        $this->setCreatedAt(new \DateTime());
+    }
+
     /**
      * Get id
      *
@@ -84,6 +117,30 @@ class History
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set itemId
+     *
+     * @param string $itemId
+     *
+     * @return History
+     */
+    public function setItemId($itemId)
+    {
+        $this->itemId = $itemId;
+
+        return $this;
+    }
+
+    /**
+     * Get itemId
+     *
+     * @return string
+     */
+    public function getItemId()
+    {
+        return $this->itemId;
     }
 
     /**
@@ -135,27 +192,27 @@ class History
     }
 
     /**
-     * Set lastVisit
+     * Set lastVisitTime
      *
-     * @param float $lastVisit
+     * @param float $lastVisitTime
      *
      * @return History
      */
-    public function setLastVisit($lastVisit)
+    public function setLastVisitTime($lastVisitTime)
     {
-        $this->lastVisit = $lastVisit;
+        $this->lastVisitTime = $lastVisitTime;
 
         return $this;
     }
 
     /**
-     * Get lastVisit
+     * Get lastVisitTime
      *
      * @return float
      */
-    public function getLastVisit()
+    public function getLastVisitTime()
     {
-        return $this->lastVisit;
+        return $this->lastVisitTime;
     }
 
     /**
