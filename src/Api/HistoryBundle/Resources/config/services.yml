@@ -1,0 +1,4 @@
+services:
+#    api_history.example:
+#        class: Api\HistoryBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

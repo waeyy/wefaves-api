@@ -7,6 +7,7 @@
         "psr-4": {
             "CoreBundle\\": "src/CoreBundle",
             "Api\\UserBundle\\": "src/Api/UserBundle",
+            "Api\\HistoryBundle\\": "src/Api/HistoryBundle",
             "Api\\OAuthBundle\\": "src/Api/OAuthBundle"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
