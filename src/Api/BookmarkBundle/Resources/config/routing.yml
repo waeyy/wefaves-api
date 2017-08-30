@@ -1,0 +1,3 @@
+bookmark:
+    type: rest
+    resource: Api\BookmarkBundle\Controller\BookmarkController

@@ -140,4 +140,22 @@ class HistoryController extends Controller
 
         return  new JsonResponse(array("message" => "History deleted."), Response::HTTP_OK);
     }
+
+    /**
+     * @Rest\View(
+     *     statusCode = 200
+     * )
+     * @Rest\Delete("/users/self/history")
+     */
+    public function deleteHistoriesAction(Request $request) {
+
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return new JsonResponse(array("message" => "Requires authentication", "documentation" => $this->getParameter('link_documentation')), Response::HTTP_UNAUTHORIZED);
+        }
+
+        $user = $this->getUser();
+
+        $repository = $this->getDoctrine()->getRepository('ApiHistoryBundle:History');
+
+    }
 }
