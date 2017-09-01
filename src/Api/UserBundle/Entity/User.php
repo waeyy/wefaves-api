@@ -34,11 +34,25 @@ class User extends BaseUser
      */
     private $histories;
 
+    /**
+     * One User has Many History.
+     * @ORM\OneToMany(targetEntity="Api\HistoryBundle\Entity\History", mappedBy="user")
+     */
+    protected $bookmarks;
+
+    /**
+     * One User has Many Bookmark Folder.
+     * @ORM\OneToMany(targetEntity="Api\BookmarkBundle\Entity\BookmarkFolder", mappedBy="user")
+     */
+    private $bookmarkFolder;
+
     public function __construct()
     {
         parent::__construct();
 
         $this->histories = new ArrayCollection();
+        $this->bookmarks = new ArrayCollection();
+        $this->bookmarkFolder = new ArrayCollection();
     }
 
     /**
@@ -75,6 +89,78 @@ class User extends BaseUser
     public function getHistories()
     {
         return $this->histories;
+    }
+
+    /**
+     * Add bookmark
+     *
+     * @param \Api\BookmarkBundle\Entity\Bookmark $bookmark
+     *
+     * @return User
+     */
+    public function addBookmark(\Api\BookmarkBundle\Entity\Bookmark $bookmark)
+    {
+        $this->bookmarks[] = $bookmark;
+
+        $bookmark->setUser($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove history
+     *
+     * @param \Api\BookmarkBundle\Entity\Bookmark $bookmark
+     */
+    public function removeBookmark(\Api\BookmarkBundle\Entity\Bookmark $bookmark)
+    {
+        $this->bookmarks->removeElement($bookmark);
+    }
+
+    /**
+     * Get histories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBookmarks()
+    {
+        return $this->bookmarks;
+    }
+
+    /**
+     * Add bookmark folder
+     *
+     * @param \Api\BookmarkBundle\Entity\BookmarkFolder $bookmarkFolder
+     *
+     * @return User
+     */
+    public function addBookmarkFolder(\Api\BookmarkBundle\Entity\BookmarkFolder $bookmarkFolder)
+    {
+        $this->bookmarkFolder[] = $bookmarkFolder;
+
+        $bookmarkFolder->setUser($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove bookmark folder
+     *
+     * @param \Api\BookmarkBundle\Entity\BookmarkFolder $bookmarkFolder
+     */
+    public function removeBookmarkFolder(\Api\BookmarkBundle\Entity\BookmarkFolder $bookmarkFolder)
+    {
+        $this->bookmarkFolder->removeElement($bookmarkFolder);
+    }
+
+    /**
+     * Get bookmark folders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBookmarkFolder()
+    {
+        return $this->bookmarkFolder;
     }
 
     public function setEmail($email)

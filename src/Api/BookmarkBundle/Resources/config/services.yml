@@ -1,0 +1,4 @@
+services:
+#    api_bookmark.example:
+#        class: Api\BookmarkBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
