@@ -28,6 +28,8 @@ class AppKernel extends Kernel
             new CoreBundle\CoreBundle(),
             new Api\HistoryBundle\ApiHistoryBundle(),
             new Api\BookmarkBundle\ApiBookmarkBundle(),
+
+            new Nelmio\CorsBundle\NelmioCorsBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
