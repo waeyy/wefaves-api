@@ -9,8 +9,10 @@ use JMS\Serializer\Annotation as Serializer;
 
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Api\UserBundle\Repository\UserRepository")
  * @ORM\Table(name="wefaves_user")
+ *
+ * @Serializer\ExclusionPolicy("all")
  */
 class User extends BaseUser
 {
@@ -20,11 +22,15 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      *
      * @Serializer\Groups({"GET_USERS", "GET_USER", "POST_USER", "GET_AUTHENTICATED_USER"})
+     *
+     * @Serializer\Expose
      */
     protected $id;
 
     /**
      * @Serializer\Groups({"GET_USERS", "GET_USER", "POST_USER", "GET_AUTHENTICATED_USER"})
+     *
+     * @Serializer\Expose
      */
     protected $email;
 

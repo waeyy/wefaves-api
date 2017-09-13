@@ -1,12 +1,12 @@
 api_bookmark:
     resource: "@ApiBookmarkBundle/Resources/config/routing.yml"
     prefix:   /
-    schemes: [https]
+    #schemes: [https]
 
 api_history:
     resource: "@ApiHistoryBundle/Resources/config/routing.yml"
     prefix:   /
-    schemes: [https]
+    #schemes: [https]
 
 core:
     resource: "@CoreBundle/Resources/config/routing.yml"
@@ -15,12 +15,12 @@ core:
 api_o_auth:
     resource: "@ApiOAuthBundle/Resources/config/routing.yml"
     prefix:   /
-    schemes: [https]
+    #schemes: [https]
 
 api_user:
     resource: "@ApiUserBundle/Resources/config/routing.yml"
     prefix:   /
-    schemes: [https]
+    #schemes: [https]
 
 fos_oauth_server_token:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"

@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\Request\ParamFetcherInterface;
+use Api\UserBundle\Representation\Users;
 
 class UserController extends Controller {
 
@@ -20,20 +22,55 @@ class UserController extends Controller {
      *
      * @Rest\View(
      *     statusCode = 200,
-     *     serializerGroups = {"GET_USERS"}
+     * )
+     * @Rest\QueryParam(
+     *     name="keyword",
+     *     requirements="[a-zA-Z0-9]",
+     *     nullable=true,
+     *     description="The keyword to search for."
+     * )
+     * @Rest\QueryParam(
+     *     name="order",
+     *     requirements="asc|desc",
+     *     default="asc",
+     *     description="Sort order (asc or desc)"
+     * )
+     * @Rest\QueryParam(
+     *     name="limit",
+     *     requirements="\d+",
+     *     default="15",
+     *     description="Max number of users per page."
+     * )
+     * @Rest\QueryParam(
+     *     name="offset",
+     *     requirements="\d+",
+     *     default="1",
+     *     description="The pagination offset"
      * )
      * @Rest\Get("/users")
      *
      */
-    public function getUsersAction()
+    public function getUsersAction(ParamFetcherInterface $paramFetcher)
     {
-        $userManager = $this->get('fos_user.user_manager');
+        $pager = $this->getDoctrine()->getRepository('ApiUserBundle:User')->search(
+            $paramFetcher->get('keyword'),
+            $paramFetcher->get('order'),
+            $paramFetcher->get('limit'),
+            $paramFetcher->get('offset')
+        );
+
+        //var_dump(new Users($pager));
+
+        //return $pager->getCurrentPageResults();
+        return new Users($pager);
+
+        /*$userManager = $this->get('fos_user.user_manager');
         $users = $userManager->findUsers();
 
         if (empty($users))
             return new JsonResponse(null, Response::HTTP_NO_CONTENT);
 
-        return $users;
+        return $users;*/
     }
 
     /**

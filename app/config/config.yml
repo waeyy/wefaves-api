@@ -5,6 +5,7 @@ imports:
     - { resource: config/fos_rest.yml }
     - { resource: config/fos_user.yml }
     - { resource: config/fos_oauth.yml }
+    - { resource: config/nelmio_cors.yml }
     - { resource: "@ApiUserBundle/Resources/config/services.yml" }
     - { resource: "@ApiOAuthBundle/Resources/config/services.yml" }
     - { resource: "@CoreBundle/Resources/config/services.yml" }

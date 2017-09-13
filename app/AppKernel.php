@@ -18,10 +18,9 @@ class AppKernel extends Kernel
 
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
+            new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
 
             new JMS\SerializerBundle\JMSSerializerBundle(),
-
-            new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
 
             new Api\UserBundle\ApiUserBundle(),
             new Api\OAuthBundle\ApiOAuthBundle(),
@@ -30,6 +29,8 @@ class AppKernel extends Kernel
             new Api\BookmarkBundle\ApiBookmarkBundle(),
 
             new Nelmio\CorsBundle\NelmioCorsBundle(),
+
+            new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
