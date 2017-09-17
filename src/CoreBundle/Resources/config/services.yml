@@ -9,9 +9,9 @@ services:
         tags:
             - { name: app.normalizer }
 
-    app.exception_subscriber:
-        class: CoreBundle\EventSubscriber\ExceptionListener
-        arguments:
-            - '@jms_serializer'
-        tags:
-            - { name: kernel.event_subscriber }
+    #app.exception_subscriber:
+    #    class: CoreBundle\EventSubscriber\ExceptionListener
+    #    arguments:
+    #        - '@jms_serializer'
+    #    tags:
+    #        - { name: kernel.event_subscriber }

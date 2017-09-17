@@ -2,9 +2,11 @@
 
 namespace Api\UserBundle\Repository;
 
-class UserRepository extends AbstractRepository
+use CoreBundle\Repository\AbstractPaginationRepository;
+
+class UserRepository extends AbstractPaginationRepository
 {
-    public function search($term, $order = 'asc', $limit = 20, $offset = 0)
+    public function filter($term, $order = 'asc', $limit = 20, $offset = 0)
     {
         $qb = $this
             ->createQueryBuilder('a')
@@ -18,10 +20,6 @@ class UserRepository extends AbstractRepository
                 ->setParameter(1, '%'.$term.'%')
             ;
         }
-
-        //var_dump($qb->getQuery()->execute());
-
-        //$qb->getQuery();
 
         return $this->paginate($qb, $limit, $offset);
     }

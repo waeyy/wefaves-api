@@ -4,6 +4,8 @@ namespace Api\HistoryBundle\Controller;
 
 use Api\HistoryBundle\Entity\History;
 use Api\HistoryBundle\Form\Type\HistoryFormType;
+use Api\HistoryBundle\Representation\Histories;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,25 +19,66 @@ class HistoryController extends Controller
      *
      * @Rest\View(
      *     statusCode = 200,
-     *     serializerGroups = {"GET_HISTORIES"}
      * )
-     * @Rest\Get("/users/self/history")
+     * @Rest\QueryParam(
+     *     name="title",
+     *     requirements="[a-zA-Z0-9]+",
+     *     nullable=true,
+     *     description="The keyword to search for."
+     * )
+     * @Rest\QueryParam(
+     *     name="order",
+     *     requirements="asc|desc",
+     *     default="asc",
+     *     description="Sort order (asc or desc)"
+     * )
+     * @Rest\QueryParam(
+     *     name="limit",
+     *     requirements="\d+",
+     *     default="15",
+     *     description="Max number of users per page."
+     * )
+     * @Rest\QueryParam(
+     *     name="offset",
+     *     requirements="\d+",
+     *     default="1",
+     *     description="The pagination offset"
+     * )
+     * @Rest\Get("/users/histories")
      *
      */
-    public function getHistoriesAction(Request $request) {
+    public function getHistoriesAction(ParamFetcherInterface $paramFetcher, Request $request) {
 
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return new JsonResponse(array("message" => "Requires authentication", "documentation" => $this->getParameter('link_documentation')), Response::HTTP_UNAUTHORIZED);
         }
-
         $user = $this->getUser();
+
+        /*if (strcmp($request->get("id"), "profile") == 0) {
+            $user = $this->getUser();
+        } else {
+            $userManager = $this->get('fos_user.user_manager');
+            $user = $userManager->findUserBy(array("id" => $request->get("id")));
+        }*/
+
+        $pager = $this->getDoctrine()->getRepository('ApiHistoryBundle:History')->filter(
+            $paramFetcher->get('title'),
+            $paramFetcher->get('order'),
+            $paramFetcher->get('limit'),
+            $paramFetcher->get('offset'),
+            $user->getId()
+        );
+
+        return new Histories($pager);
+
+        /*$user = $this->getUser();
         $history = $user->getHistories();
 
         if ($history->isEmpty()) {
             return new JsonResponse(null, Response::HTTP_NO_CONTENT);
         }
 
-        return $history;
+        return $history;*/
     }
 
     /**

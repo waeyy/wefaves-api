@@ -25,7 +25,7 @@ class UserController extends Controller {
      * )
      * @Rest\QueryParam(
      *     name="keyword",
-     *     requirements="[a-zA-Z0-9]",
+     *     requirements="[a-zA-Z0-9]+",
      *     nullable=true,
      *     description="The keyword to search for."
      * )
@@ -52,7 +52,7 @@ class UserController extends Controller {
      */
     public function getUsersAction(ParamFetcherInterface $paramFetcher)
     {
-        $pager = $this->getDoctrine()->getRepository('ApiUserBundle:User')->search(
+        $pager = $this->getDoctrine()->getRepository('ApiUserBundle:User')->filter(
             $paramFetcher->get('keyword'),
             $paramFetcher->get('order'),
             $paramFetcher->get('limit'),
@@ -73,18 +73,17 @@ class UserController extends Controller {
         return $users;*/
     }
 
-    /**
+    /*/**
      *
      * @Rest\View(
      *     statusCode = 200,
      *     serializerGroups = {"GET_AUTHENTICATED_USER"}
      * )
-     * @Rest\Get("/users/self")
+     * @Rest\Get("/users/profile")
      *
      */
-    public function getUserSelfAction()
+    /*public function getUserProfileAction()
     {
-
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return new JsonResponse(array("message" => "Requires authentication", "documentation" => $this->getParameter('link_documentation')), Response::HTTP_UNAUTHORIZED);
         }
@@ -92,7 +91,7 @@ class UserController extends Controller {
         $user = $this->getUser();
 
         return $user;
-    }
+    }*/
 
     /**
      *
@@ -105,9 +104,16 @@ class UserController extends Controller {
      */
     public function getUserAction(Request $request)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return new JsonResponse(array("message" => "Requires authentication", "documentation" => $this->getParameter('link_documentation')), Response::HTTP_UNAUTHORIZED);
+        }
 
-        $userManager = $this->get('fos_user.user_manager');
-        $user = $userManager->findUserBy(array("id" => $request->get("id")));
+        if (strcmp($request->get("id"), "profile") == 0) {
+            $user = $this->getUser();
+        } else {
+            $userManager = $this->get('fos_user.user_manager');
+            $user = $userManager->findUserBy(array("id" => $request->get("id")));
+        }
 
         if (empty($user))
             return new JsonResponse(array("message" => "Not Found", "documentation" => $this->getParameter('link_documentation')), Response::HTTP_NOT_FOUND);

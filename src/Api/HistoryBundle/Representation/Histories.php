@@ -1,15 +1,15 @@
 <?php
 
-namespace Api\UserBundle\Representation;
+namespace Api\HistoryBundle\Representation;
 
 use CoreBundle\Representation\PaginationRepresentation;
 use Pagerfanta\Pagerfanta;
 use JMS\Serializer\Annotation as Serializer;
 
-class Users extends PaginationRepresentation
+class Histories extends PaginationRepresentation
 {
     /**
-     * @Serializer\Type("array<Api\UserBundle\Entity\User>")
+     * @Serializer\Type("array<Api\HistoryBundle\Entity\History>")
      */
     public $data;
 

@@ -68,12 +68,11 @@ class Bookmark
     protected $indexPos;
 
     /**
-     * @ORM\Column(name="parent_id", type="integer")
+     * @ORM\Column(name="parent_id", type="integer", nullable=true)
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
      *
      * @Assert\NotBlank()
-     * @Assert\NotNull()
      */
     protected $parentId;
 

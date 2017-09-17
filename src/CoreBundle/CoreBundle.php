@@ -8,8 +8,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class CoreBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    /*public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new ExceptionNormalizerPass());
-    }
+    }*/
 }

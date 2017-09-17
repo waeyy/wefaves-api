@@ -1,13 +1,13 @@
 <?php
 
-namespace Api\UserBundle\Repository;
+namespace CoreBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
-abstract class AbstractRepository extends EntityRepository
+abstract class AbstractPaginationRepository extends EntityRepository
 {
     protected function paginate(QueryBuilder $qb, $limit = 15, $offset = 1)
     {
@@ -16,15 +16,12 @@ abstract class AbstractRepository extends EntityRepository
         }
 
         $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
-        //$offset = (int) $offset;
+
         $currentPage = ceil( ($offset + 1) / $limit );
-       // var_dump($currentPage); die;
+
         $pager->setMaxPerPage((int) $limit);
         $pager->setCurrentPage($currentPage);
-        //$pager->setMaxPerPage((int) $limit);
-
-       //var_dump($pager->getAdapter()->getQuery()->execute());
-
+        
         return $pager;
     }
 }

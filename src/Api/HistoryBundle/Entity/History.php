@@ -7,8 +7,10 @@ use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Api\HistoryBundle\Repository\HistoryRepository")
  * @ORM\Table(name="wefaves_history")
+ *
+ * @Serializer\ExclusionPolicy("all")
  */
 class History
 {
@@ -18,6 +20,8 @@ class History
      * @ORM\GeneratedValue(strategy="AUTO")
      *
      * @Serializer\Groups({"GET_HISTORIES"})
+     *
+     * @Serializer\Expose
      */
     protected $id;
 
@@ -25,6 +29,8 @@ class History
      * @ORM\Column(type="integer")
      *
      * @Serializer\Groups({"GET_HISTORIES"})
+     *
+     * @Serializer\Expose
      *
      * @Assert\NotBlank()
      * @Assert\NotNull()
@@ -36,6 +42,8 @@ class History
      *
      * @Serializer\Groups({"GET_HISTORIES"})
      *
+     * @Serializer\Expose
+     *
      * @Assert\NotBlank()
      * @Assert\NotNull()
      */
@@ -45,6 +53,8 @@ class History
      * @ORM\Column(type="text")
      *
      * @Serializer\Groups({"GET_HISTORIES"})
+     *
+     * @Serializer\Expose
      *
      * @Assert\NotBlank()
      * @Assert\NotNull()
@@ -56,6 +66,8 @@ class History
      * Many History has One User
      * @ORM\ManyToOne(targetEntity="Api\UserBundle\Entity\User", inversedBy="histories")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *
+     * @Serializer\Expose
      */
     protected $user;
 
@@ -63,6 +75,8 @@ class History
      * @ORM\Column(type="float", name="last_visit_time")
      *
      * @Serializer\Groups({"GET_HISTORIES"})
+     *
+     * @Serializer\Expose
      *
      * @Assert\NotBlank()
      * @Assert\NotNull()
@@ -74,6 +88,8 @@ class History
      *
      * @Serializer\Groups({"GET_HISTORIES"})
      *
+     * @Serializer\Expose
+     *
      * @Assert\NotBlank()
      * @Assert\NotNull()
      */
@@ -83,6 +99,8 @@ class History
      * @ORM\Column(type="integer")
      *
      * @Serializer\Groups({"GET_HISTORIES"})
+     *
+     * @Serializer\Expose
      *
      * @Assert\NotBlank()
      * @Assert\NotNull()
