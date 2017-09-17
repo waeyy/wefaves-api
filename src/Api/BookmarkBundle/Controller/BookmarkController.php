@@ -43,6 +43,48 @@ class BookmarkController extends Controller
     /**
      *
      * @Rest\View(
+     *     statusCode = 201,
+     *     serializerGroups = {"GET_BOOKMARKS_FOLDERS"}
+     * )
+     * @Rest\Post("/users/self/bookmarks/folder")
+     *
+     */
+    public function postBookmarkFolderAction(Request $request) {
+
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return new JsonResponse(array("message" => "Requires authentication", "documentation" => $this->getParameter('link_documentation')), Response::HTTP_UNAUTHORIZED);
+        }
+
+        $user = $this->getUser();
+        $bookmarkFolder = new BookmarkFolder();
+
+        $repository = $this->getDoctrine()->getRepository('ApiBookmarkBundle:BookmarkFolder');
+        $bookmarkFolderParent = $repository->findOneBy(array("itemId" => $request->request->get('parentId')));
+
+        if (empty($bookmarkFolderParent) && $request->request->get('parentId') > '0')
+            return new JsonResponse(array("message" => "ParentId is not valid: Requested folder was not found."), Response::HTTP_NOT_FOUND);
+
+        $form = $this->createForm(BookmarkFolderFormType::class, $bookmarkFolder);
+        $form->submit($request->request->all());
+
+        if ($form->isValid()) {
+
+            $bookmarkFolder->setBookmarkFolderParent($bookmarkFolderParent);
+            $user->addBookmarkFolder($bookmarkFolder);
+
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($bookmarkFolder);
+            $em->flush();
+
+            return $bookmarkFolder;
+        }
+
+        return $form;
+    }
+
+    /**
+     *
+     * @Rest\View(
      *     statusCode = 200,
      *     serializerGroups = {"GET_BOOKMARKS_FOLDERS"}
      * )
@@ -138,48 +180,6 @@ class BookmarkController extends Controller
             $em->flush();
 
             return $bookmark;
-        }
-
-        return $form;
-    }
-
-    /**
-     *
-     * @Rest\View(
-     *     statusCode = 201,
-     *     serializerGroups = {"GET_BOOKMARKS_FOLDERS"}
-     * )
-     * @Rest\Post("/users/self/bookmarks/folder")
-     *
-     */
-    public function postBookmarkFolderAction(Request $request) {
-
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return new JsonResponse(array("message" => "Requires authentication", "documentation" => $this->getParameter('link_documentation')), Response::HTTP_UNAUTHORIZED);
-        }
-
-        $user = $this->getUser();
-        $bookmarkFolder = new BookmarkFolder();
-
-        $repository = $this->getDoctrine()->getRepository('ApiBookmarkBundle:BookmarkFolder');
-        $bookmarkFolderParent = $repository->findOneBy(array("itemId" => $request->request->get('parentId')));
-
-        if (empty($bookmarkFolderParent) && $request->request->get('parentId') > '0')
-            return new JsonResponse(array("message" => "ParentId is not valid: Requested folder was not found."), Response::HTTP_NOT_FOUND);
-
-        $form = $this->createForm(BookmarkFolderFormType::class, $bookmarkFolder);
-        $form->submit($request->request->all());
-
-        if ($form->isValid()) {
-
-            $bookmarkFolder->setBookmarkFolderParent($bookmarkFolderParent);
-            $user->addBookmarkFolder($bookmarkFolder);
-
-            $em = $this->get('doctrine.orm.entity_manager');
-            $em->persist($bookmarkFolder);
-            $em->flush();
-
-            return $bookmarkFolder;
         }
 
         return $form;
