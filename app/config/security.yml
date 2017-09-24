@@ -25,14 +25,15 @@ security:
                 check_path: /oauth/v2/auth/login_check
                 login_path: /oauth/v2/auth/login
 
-        api_authenticated_user:
-            pattern:    ^/users/self
-            fos_oauth: true
-            stateless:  true
-            anonymous:  true # note that anonymous access is now enabled
+        #api_authenticated_user:
+        #    pattern:    ^/users/self
+        #    fos_oauth: true
+        #    stateless:  true
+        #    anonymous:  true # note that anonymous access is now enabled
 
         api:
             pattern:    ^/
+            fos_oauth: true
             stateless:  true
             anonymous:  true # note that anonymous access is now enabled
 

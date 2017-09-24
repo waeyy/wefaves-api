@@ -10,8 +10,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * BookmarkFolder
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Api\BookmarkBundle\Repository\BookmarkRepository")
  * @ORM\Table(name="wefaves_bookmark_folder")
+ *
+ * @Serializer\ExclusionPolicy("all")
  */
 class BookmarkFolder
 {
@@ -23,6 +25,7 @@ class BookmarkFolder
      * @ORM\GeneratedValue(strategy="AUTO")
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
+     * @Serializer\Expose
      */
     protected $id;
 
@@ -38,6 +41,7 @@ class BookmarkFolder
      * @ORM\OneToMany(targetEntity="Api\BookmarkBundle\Entity\Bookmark", mappedBy="bookmarkFolder", cascade={"persist", "remove"})
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
+     * @Serializer\Expose
      */
     protected $bookmarks;
 
@@ -46,6 +50,7 @@ class BookmarkFolder
      * @ORM\OneToMany(targetEntity="Api\BookmarkBundle\Entity\BookmarkFolder", mappedBy="bookmarkFolderParent", cascade={"persist", "remove"})
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
+     * @Serializer\Expose
      */
     protected $bookmarkFolderChild;
 
@@ -62,6 +67,7 @@ class BookmarkFolder
      * @ORM\Column(name="date_added", type="bigint")
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
+     * @Serializer\Expose
      *
      * @Assert\NotBlank()
      * @Assert\NotNull()
@@ -74,6 +80,7 @@ class BookmarkFolder
      * @ORM\Column(name="date_group_modified", type="bigint")
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
+     * @Serializer\Expose
      *
      * @Assert\NotBlank()
      * @Assert\NotNull()
@@ -86,6 +93,7 @@ class BookmarkFolder
      * @ORM\Column(name="item_id", type="integer")
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
+     * @Serializer\Expose
      *
      * @Assert\NotBlank()
      * @Assert\NotNull()
@@ -98,6 +106,7 @@ class BookmarkFolder
      * @ORM\Column(name="index_pos", type="integer")
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
+     * @Serializer\Expose
      *
      * @Assert\NotBlank()
      * @Assert\NotNull()
@@ -107,12 +116,10 @@ class BookmarkFolder
     /**
      * @var int
      *
-     * @ORM\Column(name="parent_id", type="integer")
+     * @ORM\Column(name="parent_id", type="integer", nullable=true)
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
-     *
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
+     * @Serializer\Expose
      */
     protected $parentId;
 
@@ -122,6 +129,7 @@ class BookmarkFolder
      * @ORM\Column(name="title", type="string", length=255)
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
+     * @Serializer\Expose
      *
      * @Assert\NotBlank()
      * @Assert\NotNull()

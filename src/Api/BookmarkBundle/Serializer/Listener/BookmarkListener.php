@@ -6,7 +6,7 @@ use JMS\Serializer\EventDispatcher\Events;
 use JMS\Serializer\EventDispatcher\EventSubscriberInterface;
 use JMS\Serializer\EventDispatcher\ObjectEvent;
 
-class BookmarkFolderListener implements EventSubscriberInterface
+class BookmarkListener implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {
@@ -14,7 +14,7 @@ class BookmarkFolderListener implements EventSubscriberInterface
             [
                 'event' => Events::POST_SERIALIZE,
                 'format' => 'json',
-                'class' => 'Api\BookmarkBundle\Entity\BookmarkFolder',
+                'class' => 'Api\BookmarkBundle\Entity\Bookmark',
                 'method' => 'onPostSerialize',
             ],
         ];
@@ -24,8 +24,8 @@ class BookmarkFolderListener implements EventSubscriberInterface
     {
         $object = $event->getObject();
 
-        if ($object->getBookmarkFolderParent() != null)
-            $parentId = $object->getBookmarkFolderParent()->getItemId();
+        if ($object->getBookmarkFolder() != null)
+            $parentId = $object->getBookmarkFolder()->getItemId();
         else
             $parentId = 0;
         

@@ -9,8 +9,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Bookmark
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Api\BookmarkBundle\Repository\BookmarkRepository")
  * @ORM\Table(name="wefaves_bookmark")
+ *
+ * @Serializer\ExclusionPolicy("all")
  */
 class Bookmark
 {
@@ -20,6 +22,7 @@ class Bookmark
      * @ORM\GeneratedValue(strategy="AUTO")
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
+     * @Serializer\Expose
      */
     protected $id;
 
@@ -41,6 +44,7 @@ class Bookmark
      * @ORM\Column(name="date_added", type="bigint")
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
+     * @Serializer\Expose
      *
      * @Assert\NotBlank()
      * @Assert\NotNull()
@@ -51,6 +55,7 @@ class Bookmark
      * @ORM\Column(name="item_id", type="integer")
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
+     * @Serializer\Expose
      *
      * @Assert\NotBlank()
      * @Assert\NotNull()
@@ -61,6 +66,7 @@ class Bookmark
      * @ORM\Column(name="index_pos", type="integer")
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
+     * @Serializer\Expose
      *
      * @Assert\NotBlank()
      * @Assert\NotNull()
@@ -68,12 +74,10 @@ class Bookmark
     protected $indexPos;
 
     /**
-     * @ORM\Column(name="parent_id", type="integer")
+     * @ORM\Column(name="parent_id", type="integer", nullable=true)
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
-     *
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
+     * @Serializer\Expose
      */
     protected $parentId;
 
@@ -81,6 +85,7 @@ class Bookmark
      * @ORM\Column(name="title", type="string", length=255)
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
+     * @Serializer\Expose
      *
      * @Assert\NotBlank()
      * @Assert\NotNull()
@@ -91,6 +96,7 @@ class Bookmark
      * @ORM\Column(name="url", type="string", length=255)
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
+     * @Serializer\Expose
      *
      * @Assert\NotBlank()
      * @Assert\NotNull()

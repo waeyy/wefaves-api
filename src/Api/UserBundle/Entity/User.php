@@ -36,7 +36,7 @@ class User extends BaseUser
 
     /**
      * One User has Many History.
-     * @ORM\OneToMany(targetEntity="Api\HistoryBundle\Entity\History", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Api\BookmarkBundle\Entity\Bookmark", mappedBy="user")
      */
     protected $bookmarks;
 
