@@ -122,7 +122,10 @@ class BookmarkController extends Controller
         //$repository = $this->getDoctrine()->getRepository('ApiBookmarkBundle:BookmarkFolder');
         //$bookmarkFolder = $repository->findOneBy(array("itemId" => $request->request->get('parentId')));
 
-        $bookmarkFolder = $this->getDoctrine()->getRepository('ApiBookmarkBundle:BookmarkFolder')->getBookmarksFolder($request->request->get('parentId'), $user)[0];
+        $bookmarkFolder = $this->getDoctrine()->getRepository('ApiBookmarkBundle:BookmarkFolder')->getBookmarksFolder($request->request->get('parentId'), $user);
+
+        if (!empty($bookmarkFolder))
+          $bookmarkFolder = $bookmarkFolder[0];
 
         if (empty($bookmarkFolder) && $request->request->get('parentId') > '0')
             return new JsonResponse(array("message" => "ParentId is not valid: Requested folder was not found."), Response::HTTP_NOT_FOUND);
@@ -167,7 +170,10 @@ class BookmarkController extends Controller
       //  $repository = $this->getDoctrine()->getRepository('ApiBookmarkBundle:BookmarkFolder');
         //$bookmarkFolderParent = $repository->findOneBy(array("itemId" => $request->request->get('parentId')));
 
-        $bookmarkFolderParent = $this->getDoctrine()->getRepository('ApiBookmarkBundle:BookmarkFolder')->getBookmarksFolder($request->request->get('parentId'), $user)[0];
+        $bookmarkFolderParent = $this->getDoctrine()->getRepository('ApiBookmarkBundle:BookmarkFolder')->getBookmarksFolder($request->request->get('parentId'), $user);
+
+        if (!empty($bookmarkFolderParent))
+          $bookmarkFolderParent = $bookmarkFolderParent[0];
 
         if (empty($bookmarkFolderParent) && $request->request->get('parentId') > '0')
             return new JsonResponse(array("message" => "ParentId is not valid: Requested folder was not found."), Response::HTTP_NOT_FOUND);
