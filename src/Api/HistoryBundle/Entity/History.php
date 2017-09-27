@@ -48,7 +48,6 @@ class History
      *
      * @Assert\NotBlank()
      * @Assert\NotNull()
-     * @Assert\Url(message = "The url '{{ value }}' is not a valid url.")
      */
     protected $url;
 

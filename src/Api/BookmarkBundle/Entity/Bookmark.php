@@ -93,14 +93,13 @@ class Bookmark
     protected $title;
 
     /**
-     * @ORM\Column(name="url", type="string", length=255)
+     * @ORM\Column(name="url", type="text", length=255)
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
      * @Serializer\Expose
      *
      * @Assert\NotBlank()
      * @Assert\NotNull()
-     * @Assert\Url(message = "The url '{{ value }}' is not a valid url.")
      */
     protected $url;
 
@@ -374,4 +373,3 @@ class Bookmark
         return $this->createdAt;
     }
 }
-
