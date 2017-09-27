@@ -183,7 +183,8 @@ class BookmarkController extends Controller
 
         if ($form->isValid()) {
 
-            $bookmarkFolder->setBookmarkFolderParent($bookmarkFolderParent);
+            if (!empty($bookmarkFolderParent))
+              $bookmarkFolder->setBookmarkFolderParent($bookmarkFolderParent);
             $user->addBookmarkFolder($bookmarkFolder);
 
             $em = $this->get('doctrine.orm.entity_manager');
