@@ -19,4 +19,18 @@ class BookmarkRepository extends EntityRepository {
 
         return ($qb->getQuery()->execute());
     }
+
+    public function getBookmarksFolder($itemId, $user) {
+
+      $qb = $this
+          ->createQueryBuilder('bf')
+          ->select('bf')
+          ->where('bf.user = ?1')
+          ->setParameter(1, $user)
+          ->andWhere('bf.itemId = ?2')
+          ->setParameter(2, $itemId)
+      ;
+
+      return ($qb->getQuery()->execute());
+    }
 }
