@@ -82,13 +82,11 @@ class Bookmark
     protected $parentId;
 
     /**
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
      * @Serializer\Expose
      *
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
      */
     protected $title;
 
