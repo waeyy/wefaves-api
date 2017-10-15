@@ -16,10 +16,10 @@ class BookmarkFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('itemId', NumberType::class)
+            ->add('itemId', TextType::class)
             ->add('title', TextType::class)
             ->add('url', TextType::class)
-            ->add('parentId', NumberType::class)
+            ->add('parentId', TextType::class)
             ->add('dateAdded', NumberType::class)
             ->add('indexPos', NumberType::class)
         ;

@@ -52,7 +52,7 @@ class Bookmark
     protected $dateAdded;
 
     /**
-     * @ORM\Column(name="item_id", type="integer")
+     * @ORM\Column(name="item_id", type="string")
      *
      * @Serializer\Groups({"GET_BOOKMARKS_FOLDERS"})
      * @Serializer\Expose
