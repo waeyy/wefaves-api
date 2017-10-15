@@ -22,7 +22,7 @@ class History
     protected $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
      *
      * @Serializer\Groups({"GET_HISTORIES"})
      *
