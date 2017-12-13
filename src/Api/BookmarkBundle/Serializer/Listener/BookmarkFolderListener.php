@@ -28,6 +28,9 @@ class BookmarkFolderListener implements EventSubscriberInterface
             $parentId = $object->getBookmarkFolderParent()->getItemId();
         else
             $parentId = 0;
+
+        if ($object->getTitle() == null)
+            $event->getVisitor()->setData('title', "");
         
         $event->getVisitor()->setData('parent_id', $parentId);
     }

@@ -343,21 +343,19 @@ class BookmarkController extends Controller
 
         $user = $this->getUser();
 
-        $repositoryBookmarkFolder = $this->getDoctrine()->getRepository('ApiBookmarkBundle:BookmarkFolder');
+        $bookmarkFolder = $this->getDoctrine()->getRepository('ApiBookmarkBundle:BookmarkFolder')->getBookmarksFolderById($request->get('id'), $user);
 
-        $bookmarkFolder = $repositoryBookmarkFolder->find($request->get("id"));
-
-        if (!empty($bookmarkFolder))
-            $bookmarkFolderParent = $repositoryBookmarkFolder->find($bookmarkFolder->getParentId());
-        else
+        if (empty($bookmarkFolder))
             return new JsonResponse(array("message" => "Requested entity was not found."), Response::HTTP_NOT_FOUND);
+        else
+            $bookmarkFolder = $bookmarkFolder[0];
+        
+        $bookmarkFolderParent = $this->getDoctrine()->getRepository('ApiBookmarkBundle:BookmarkFolder')->getBookmarksFolderById($bookmarkFolder->getParentId(), $user);
 
-        if ($bookmarkFolder->getUser()->getId() != $user->getId()) {
-            return new JsonResponse(array("message" => "You are not allowed to access to the requested resource."), Response::HTTP_UNAUTHORIZED);
-        }
-
-        if (!empty($bookmarkFolderParent))
+        if (!empty($bookmarkFolderParent)) {
+            $bookmarkFolderParent = $bookmarkFolderParent[0];
             $bookmarkFolderParent->removeBookmarkFolderChild($bookmarkFolder);
+        }
 
         $user->removeBookmarkFolder($bookmarkFolder);
 
